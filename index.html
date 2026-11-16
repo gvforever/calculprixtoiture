@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/logo-picto.png">
+<title>Prix toiture : obtenez votre prix en direct — Ma Toiture Neuve</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<style>
+:root{
+  --bg:#f6f8f7; --card:#ffffff; --ink:#192a3d; --text:#3a4f66; --muted:#6b7b8c; --line:#e1e7e4;
+  --green:#2f9e44; --green-d:#237a34; --green-l:#e7f6ea; --green-v:#4cbb3c; --navy:#192a3d;
+  --r:12px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55}
+button{font-family:inherit}
+/* Header */
+.topbar{background:#fff;border-bottom:1px solid var(--line)}
+.topbar .in{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo .mark{display:flex;flex-direction:column;align-items:center;gap:2px}
+.logo .word{border:2px solid #5dbc24;outline:1px solid #11e9b8;outline-offset:1px;padding:1px 9px;font-weight:500;color:#5dbc24;font-size:19px;letter-spacing:0;line-height:1.25}
+.logo .word b{color:var(--green)}
+.topbar .tag{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink);display:flex;gap:18px}
+.topbar .tag span:first-child{color:var(--green)}
+.wrap{max-width:960px;margin:0 auto;padding:30px 20px 80px}
+.hero{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin-bottom:24px}
+.hero h1{color:var(--ink);font-weight:800;font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 10px;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero p{margin:0;max-width:600px}
+.badges{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:var(--ink)}
+.badges span{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.badges span::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/10px no-repeat}
+.progress{display:flex;gap:6px;margin:0 0 8px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--line);transition:background .3s}
+.progress span.on{background:var(--green)}
+.stepinfo{font-size:13px;color:var(--muted);margin-bottom:16px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:0 10px 30px -20px rgba(25,42,61,.25)}
+.step{display:none;animation:fade .35s ease}
+.step.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{color:var(--ink);font-size:24px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:0 0 22px}
+.q{margin:0 0 26px}
+.ql{display:block;font-weight:800;color:var(--ink);margin-bottom:10px;font-size:15px}
+.hint{font-weight:500;color:var(--muted);font-size:13px}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.grid.wide{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.opt{position:relative;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:var(--r);padding:13px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .1s;display:flex;flex-direction:column;gap:6px;color:var(--ink);font-size:14px;font-weight:700}
+.opt:hover{border-color:#b9d9c0}
+.opt:active{transform:scale(.98)}
+.opt.sel{border-color:var(--green);box-shadow:0 0 0 3px var(--green-l);background:#fbfefb}
+.opt.sel::after{content:"";position:absolute;top:9px;right:9px;width:18px;height:18px;border-radius:50%;background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/11px no-repeat}
+.opt small{font-weight:500;color:var(--muted);font-size:12.5px;line-height:1.35}
+.opt svg.ico{width:100%;height:56px}
+.opt.sel svg.ico{color:var(--green)}
+.swatch{height:40px;border-radius:8px}
+.sw-beton{background:linear-gradient(#0000 70%,#0002 0) 0 0/100% 12px,repeating-linear-gradient(90deg,#8e9398 0 16px,#767b80 16px 18px)}
+.sw-meca{background:linear-gradient(#0000 70%,#0003 0) 0 0/100% 12px,repeating-linear-gradient(90deg,#b5532f 0 16px,#9b4123 16px 18px)}
+.sw-canal{background:linear-gradient(#0000 75%,#0003 0) 0 0/100% 14px,repeating-linear-gradient(90deg,#d0773f 0 6px,#e39a62 6px 9px,#b25a2b 9px 14px)}
+.sw-vern{background:linear-gradient(#0000 70%,#0004 0) 0 0/100% 12px,repeating-linear-gradient(90deg,#2f6d4f 0 14px,#c39b3f 14px 16px,#2f6d4f 16px 30px,#7a3b22 30px 32px)}
+.sw-plate{background:linear-gradient(#0000 65%,#0004 0) 0 0/100% 8px,repeating-linear-gradient(90deg,#8e4a2c 0 9px,#74391f 9px 10px)}
+.sw-ardoise{background:linear-gradient(#0000 75%,#0005 0) 0 0/100% 10px,repeating-linear-gradient(90deg,#4a5563 0 13px,#3a4350 13px 14px)}
+.sw-lauze{background:linear-gradient(#0000 70%,#0003 0) 0 0/100% 13px,repeating-linear-gradient(90deg,#a39e94 0 20px,#8b867d 20px 22px,#b3aea4 22px 33px,#8b867d 33px 35px)}
+.sw-tav{background:linear-gradient(#0000 75%,#0003 0) 0 0/100% 11px,repeating-linear-gradient(90deg,#b88a5a 0 9px,#9c7045 9px 10px,#c49a6a 10px 17px,#9c7045 17px 18px)}
+.sw-chaume{background:repeating-linear-gradient(100deg,#d9b866 0 3px,#c49a45 3px 5px,#e2c47a 5px 7px)}
+.sw-zinc{background:repeating-linear-gradient(90deg,#b9c0c7 0 22px,#8f99a3 22px 24px)}
+.sw-bac{background:repeating-linear-gradient(90deg,#9aa3ab 0 8px,#7d868e 8px 12px,#9aa3ab 12px 16px)}
+.sw-baciso{background:linear-gradient(#0000 78%,#e8d27a 0),repeating-linear-gradient(90deg,#8fa39a 0 8px,#71857c 8px 12px,#8fa39a 12px 16px)}
+.sw-alu{background:repeating-linear-gradient(90deg,#dde1e5 0 20px,#bcc3c9 20px 22px)}
+.sw-cuivre{background:repeating-linear-gradient(90deg,#c47a43 0 22px,#9a5a2c 22px 24px)}
+input[type=text],input[type=email],input[type=tel],input[type=number],select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;font:inherit;background:#fff;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-l)}
+input.err,select.err{border-color:#c0392b}
+.row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+.row3{display:grid;gap:12px;grid-template-columns:140px 1fr}
+.row4{display:grid;gap:12px;grid-template-columns:150px 130px 1fr}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.f label{font-size:13px;font-weight:700;color:var(--ink)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer;margin:6px 0 14px}
+.check input{width:18px;height:18px;accent-color:var(--green);margin-top:2px;flex:none}
+.subbox{border:1px dashed #b9d9c0;border-radius:12px;padding:16px;margin:4px 0 16px;background:#f8fcf9}
+.repTotal{margin-top:8px;font-size:13.5px;font-weight:800;color:var(--green-d)}
+.repTotal.bad{color:#c0392b}
+.item input.pct{width:78px;text-align:right;padding:8px 10px}
+.items{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:var(--r);padding:11px 14px;background:#fff}
+.item.on{border-color:var(--green);background:#fbfefb}
+.item .t{flex:1;font-weight:700;font-size:14px;color:var(--ink)}
+.item .t small{display:block;color:var(--muted);font-weight:500;font-size:12.5px}
+.qty{display:flex;align-items:center;gap:4px}
+.qty button{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--line);background:#fff;font-size:18px;font-weight:700;cursor:pointer;color:var(--ink)}
+.qty button:hover{border-color:var(--green);color:var(--green)}
+.qty output{min-width:30px;text-align:center;font-weight:800;color:var(--ink)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:10px;padding-top:20px;border-top:1px solid var(--line)}
+.btn{border:0;border-radius:10px;padding:14px 22px;font-weight:800;font-size:15px;cursor:pointer;transition:background .15s,transform .1s}
+.btn:active{transform:scale(.98)}
+.btn.pri{background:var(--green);color:#fff}
+.btn.pri:hover{background:var(--green-d)}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:#b9d9c0}
+.msg{color:#c0392b;font-size:13.5px;font-weight:700;min-height:20px;margin-top:4px}
+.hide{display:none!important}
+/* Loader */
+#loader{display:none;text-align:center;padding:50px 20px 40px}
+#loader.on{display:block;animation:fade .35s}
+.house{width:190px;height:150px;margin:0 auto 20px}
+.house .tile{opacity:0;animation:tile .5s forwards}
+@keyframes tile{to{opacity:1}}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;max-width:380px;margin:18px auto 10px}
+.bar i{display:block;height:100%;width:0;background:var(--green);border-radius:8px}
+#loadtxt{font-weight:800;color:var(--ink);min-height:24px}
+#loadpct{color:var(--muted);font-size:13px;font-weight:700}
+/* Result */
+#result{display:none}
+#result.on{display:block;animation:fade .4s}
+.ready{display:flex;gap:14px;align-items:center;margin-bottom:20px}
+.ready .ic{width:52px;height:52px;border-radius:50%;background:var(--green-l);display:grid;place-items:center;flex:none}
+.total{background:var(--navy);color:#fff;border-radius:14px;padding:24px;margin:0 0 20px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;border-left:6px solid var(--green-v)}
+.total .lbl{font-size:13px;opacity:.75;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.total .big{font-size:clamp(34px,6vw,46px);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+.total .range{font-size:14px;opacity:.9}
+table.det{width:100%;border-collapse:collapse;font-size:14.5px;color:var(--ink)}
+table.det td{padding:12px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+table.det td:last-child{text-align:right;font-weight:800;white-space:nowrap}
+table.det td small{display:block;color:var(--muted);font-size:12.5px;font-weight:500}
+table.det tr.sum td{border-bottom:0;padding:6px}
+table.det tr.sum.ttc td{font-size:17px;font-weight:800;padding-top:12px;border-top:2px solid var(--ink)}
+table.det tr.sum.ttc td:last-child{color:var(--green-d)}
+.rdv{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--green);color:#fff;text-decoration:none;font-weight:800;font-size:16px;text-align:center;padding:16px 20px;border-radius:12px;margin:-6px 0 22px;box-shadow:0 8px 20px -10px rgba(47,158,68,.7);transition:background .15s,transform .1s}
+.rdv:hover{background:var(--green-d)}
+.rdv:active{transform:scale(.99)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+details.algo{margin-top:22px;border:1px solid var(--line);border-radius:12px;background:#f8faf9}
+details.algo summary{cursor:pointer;padding:14px 16px;font-weight:800;color:var(--ink)}
+details.algo pre{margin:0;padding:0 16px 16px;white-space:pre-wrap;font-size:12.5px;line-height:1.6;font-family:ui-monospace,Menlo,Consolas,monospace;color:#33475b}
+.note{font-size:12.5px;color:var(--muted);margin-top:16px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;font-size:14px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90vw}
+.toast.on{opacity:1}
+footer{text-align:center;font-size:12.5px;color:var(--muted);padding:10px 20px 30px}
+@media (max-width:680px){.card{padding:20px}.row,.row3,.row4{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.grid.wide{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.topbar .tag{display:none}}
+
+.menu-btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 14px;font-weight:800;font-size:14px;cursor:pointer;color:var(--ink);font-family:inherit}
+.menu-btn:hover{border-color:#b9d9c0}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,92vw);background:#fff;z-index:60;transform:translateX(105%);transition:transform .25s ease;box-shadow:-10px 0 40px -10px rgba(25,42,61,.3);overflow-y:auto}
+.drawer.open{transform:none}
+.drawer-in{padding:20px}
+.drawer-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:17px;color:var(--ink)}
+.drawer .x{border:0;background:#f1f4f2;border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:16px}
+.drawer h4{margin:18px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--green)}
+.drawer ul{list-style:none;margin:0;padding:0}
+.drawer li a{display:block;padding:6px 8px;border-radius:7px;color:var(--ink);text-decoration:none;font-size:14px}
+.drawer li a:hover{background:var(--green-l)}
+.filter{width:100%;margin-top:12px;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit}
+.scrim{position:fixed;inset:0;background:rgba(25,42,61,.35);z-index:55;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer .btn-full{display:block;text-align:center;background:var(--green);color:#fff!important;text-decoration:none;padding:12px;border-radius:10px;font-weight:800}
+.sitefoot{background:#fff;border-top:3px solid #5dbc24;margin-top:40px}
+.sitefoot .in{max-width:960px;margin:0 auto;padding:26px 20px;font-size:13.5px;color:var(--text)}
+.sitefoot a{color:var(--green-d)}
+.foot-cta{font-weight:700;color:var(--ink)}
+.foot-villes{font-size:12.5px;line-height:1.9}
+.foot-www{text-align:center;font-weight:800;color:var(--green);font-size:20px;margin:18px 0 4px}
+.foot-test{text-align:center;font-size:11.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <div class="logo">
+    <div class="mark">
+      <div class="word">ma-toiture-neuve.fr</div>
+      <img id="logoPicto" alt="" width="64" height="50" style="display:block">
+    </div>
+  </div>
+  <div style="display:flex;gap:16px;align-items:center"><div class="tag"><span>Simulateur</span><span>Devis offert</span><span>Zéro tracas</span></div><button class="menu-btn" onclick="toggleMenu(true)">☰ Pages prix</button></div>
+</div></div>
+
+<div class="wrap">
+  <section class="hero" id="hero">
+    <div>
+      <h1>Calculez le <em>prix de votre toiture</em> en 2 minutes</h1>
+      <p>Charpente, couverture, ouvertures, gouttières : répondez à quelques questions et recevez immédiatement votre simulation de devis détaillée en PDF.</p>
+    </div>
+    <div class="badges"><span>Gratuit et sans engagement</span><span>Résultat immédiat</span><span>Partout en France</span></div>
+  </section>
+
+  <div id="simulateur" style="scroll-margin-top:20px"></div>
+  <div class="progress" id="progress"></div>
+  <div class="stepinfo" id="stepinfo"></div>
+
+  <main class="card" id="form">
+    <!-- 1 PROJET -->
+    <section class="step" data-step="0">
+      <h2>Votre projet</h2>
+      <p class="lead">Quels travaux souhaitez-vous réaliser, et sur quel bâtiment ?</p>
+      <div class="q"><div class="ql">Type de travaux</div><div class="grid wide" data-group="travaux"></div></div>
+      <div class="q hide" id="qCharp"><div class="ql">La charpente est-elle concernée par les travaux ?</div><div class="grid" data-group="charp"></div></div>
+      <div class="q"><div class="ql">Type de bâtiment</div><div class="grid wide" data-group="batiment"></div></div>
+    </section>
+
+    <!-- 2 TOITURE -->
+    <section class="step" data-step="1">
+      <h2>Votre toiture</h2>
+      <p class="lead">La forme de votre bâtiment et le type de toit.</p>
+      <div class="q"><div class="ql">Forme du bâtiment <span class="hint">(vu de dessus)</span></div><div class="grid" data-group="forme"></div></div>
+      <div class="q"><div class="ql">Type de toiture et pente</div><div class="grid" data-group="style"></div></div>
+    </section>
+
+    <!-- 3 DIMENSIONS -->
+    <section class="step" data-step="2">
+      <h2>Surface et hauteur</h2>
+      <p class="lead">Une estimation suffit, nous affinerons lors du rendez-vous.</p>
+      <div class="q"><div class="ql">Surface de toiture concernée <span class="hint">(approximative)</span></div><div class="grid" data-group="surface"></div>
+        <div class="f" style="margin-top:12px;max-width:320px"><label for="surfaceExact">Vous connaissez la surface exacte ? (facultatif, en m²)</label><input type="number" id="surfaceExact" min="5" max="5000" placeholder="ex. 86"></div>
+      </div>
+      <div class="q"><div class="ql">Hauteur du bâtiment <span class="hint">(au faîtage)</span></div><div class="grid" data-group="hauteur"></div></div>
+    </section>
+
+    <!-- 4 COUVERTURE -->
+    <section class="step" data-step="3">
+      <h2>Matériaux de couverture</h2>
+      <p class="lead">Le revêtement de votre toit, actuel ou souhaité. <b>Vous pouvez en choisir plusieurs.</b></p>
+      <div class="q"><div class="grid" data-group="materiau" data-multi="1"></div></div>
+      <div class="q hide" id="qRepart">
+        <div class="ql">Répartition de la surface <span class="hint">(ajustez si besoin, le total doit faire 100 %)</span></div>
+        <div class="items" id="repart"></div>
+        <div class="repTotal" id="repTotal"></div>
+      </div>
+    </section>
+
+    <!-- 5 OUVERTURES & EP -->
+    <section class="step" data-step="4">
+      <h2>Ouvertures &amp; eaux pluviales</h2>
+      <p class="lead">Fenêtres de toit, lucarnes, gouttières et descentes.</p>
+      <div class="q"><div class="ql">Ouvertures et fenêtres de toit <span class="hint">(laissez à 0 si aucune)</span></div><div class="items" id="ouvertures"></div></div>
+      <div class="q"><div class="ql">Eaux pluviales <span class="hint">(gouttières, descentes, chéneaux)</span></div><div class="grid wide" data-group="ep"></div></div>
+    </section>
+
+    <!-- 6 COORDONNEES -->
+    <section class="step" data-step="5">
+      <h2>Vos coordonnées</h2>
+      <p class="lead">Pour établir votre simulation personnalisée et appliquer le coefficient de votre zone géographique.</p>
+      <div class="row3">
+        <div class="f"><label for="civ">Civilité</label><select id="civ"><option value="M.">M.</option><option value="Mme">Mme</option></select></div>
+        <div class="row">
+          <div class="f"><label for="prenom">Prénom</label><input type="text" id="prenom" autocomplete="given-name"></div>
+          <div class="f"><label for="nom">Nom</label><input type="text" id="nom" autocomplete="family-name"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="email">E-mail</label><input type="email" id="email" autocomplete="email"></div>
+        <div class="f"><label for="tel">Téléphone</label><input type="tel" id="tel" autocomplete="tel"></div>
+      </div>
+      <div class="ql" style="margin:10px 0 8px">Adresse du domicile</div>
+      <div class="f"><label for="adr">Adresse</label><input type="text" id="adr" autocomplete="street-address" placeholder="N° et rue"></div>
+      <div class="row4">
+        <div class="f"><label for="pays">Pays</label><select id="pays" autocomplete="country"><option value="FR">France</option><option value="MC">Monaco</option><option value="BE">Belgique</option><option value="CH">Suisse</option></select></div>
+        <div class="f"><label for="cp">Code postal</label><input type="text" id="cp" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="75011"></div>
+        <div class="f"><label for="ville">Ville</label><input type="text" id="ville" autocomplete="address-level2"></div>
+      </div>
+      <label class="check"><input type="checkbox" id="diff"> L'adresse du chantier est différente de mon domicile</label>
+      <div class="subbox hide" id="chantierBox">
+        <div class="ql" style="margin-bottom:8px">Adresse du chantier</div>
+        <div class="f"><label for="cAdr">Adresse</label><input type="text" id="cAdr" placeholder="N° et rue"></div>
+        <div class="row4">
+          <div class="f"><label for="cPays">Pays</label><select id="cPays"><option value="FR">France</option><option value="MC">Monaco</option><option value="BE">Belgique</option><option value="CH">Suisse</option></select></div>
+          <div class="f"><label for="cCp">Code postal</label><input type="text" id="cCp" inputmode="numeric" maxlength="5" placeholder="75011"></div>
+          <div class="f"><label for="cVille">Ville</label><input type="text" id="cVille"></div>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" id="rgpd"> J'accepte que mes informations soient utilisées pour établir ma simulation et être recontacté(e) au sujet de mon projet.</label>
+    </section>
+
+    <!-- 7 DELAI -->
+    <section class="step" data-step="6">
+      <h2>Dernière question</h2>
+      <p class="lead">Votre délai nous permet d'organiser l'intervention. Votre devis PDF est ensuite généré immédiatement.</p>
+      <div class="q"><div class="ql">Quand souhaitez-vous réaliser vos travaux ?</div><div class="grid" data-group="urgence"></div></div>
+    </section>
+
+    <div class="msg" id="msg"></div>
+    <div class="nav">
+      <button class="btn ghost" id="prev">← Précédent</button>
+      <button class="btn pri" id="next">Suivant →</button>
+    </div>
+  </main>
+
+  <!-- PRELOADER -->
+  <section class="card" id="loader">
+    <svg class="house" viewBox="0 0 190 150" aria-hidden="true">
+      <g id="tiles"></g>
+      <rect x="40" y="78" width="110" height="66" rx="3" fill="#e4ebe7"/>
+      <rect x="84" y="104" width="22" height="40" rx="2" fill="#192a3d"/>
+      <rect x="54" y="92" width="18" height="16" rx="2" fill="#192a3d" opacity=".8"/>
+      <rect x="118" y="92" width="18" height="16" rx="2" fill="#192a3d" opacity=".8"/>
+    </svg>
+    <div id="loadtxt">Analyse de votre projet…</div>
+    <div class="bar"><i id="loadbar"></i></div>
+    <div id="loadpct">0 %</div>
+  </section>
+
+  <!-- RESULTAT -->
+  <section class="card" id="result">
+    <div class="ready">
+      <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2f9e44" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></div>
+      <div><h2 style="margin:0">Votre devis / simulation est prêt</h2><div class="lead" style="margin:0" id="resSub"></div></div>
+    </div>
+    <div class="total">
+      <div><div class="lbl">Estimation totale TTC</div><div class="big" id="resTotal">—</div></div>
+      <div class="range" id="resRange"></div>
+    </div>
+    <a class="rdv" id="rdvBtn" href="#" target="_blank" rel="noopener">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg>
+      <span>Obtenir un rendez-vous pour confirmer mon projet et valider un devis exact</span>
+    </a>
+    <table class="det" id="resTable"></table>
+    <div class="actions">
+      <button class="btn pri" id="pdfBtn">⬇ Télécharger mon devis (PDF)</button>
+      <button class="btn ghost" id="restart">Nouvelle simulation</button>
+    </div>
+    <details class="algo"><summary>Détail technique du calcul (coefficients appliqués)</summary><pre id="algo"></pre></details>
+    <p class="note">Simulation indicative et non contractuelle, établie à partir des informations déclarées. Seule une visite technique permet d'établir un devis définitif.</p>
+  </section>
+</div>
+<footer class="sitefoot"><div class="in">
+<p class="foot-cta">Avec notre simulateur, vous savez tout de suite combien vont vous coûter vos travaux de charpente et de toiture, qu&#x27;il s&#x27;agisse d&#x27;entretien, de rénovation ou de construction, partout en France. <a href="/#simulateur">Lancer le simulateur →</a></p>
+<p>La simulation qui vous est remise est suivie d&#x27;un rendez-vous avec un de nos professionnels, afin d&#x27;affiner votre prix et de vous proposer un devis définitif. Vos travaux de toiture au meilleur prix, avec un interlocuteur fiable, partout en France.</p>
+<p class="foot-villes"><b>Prix toiture par ville :</b> <a href="/prix-toiture-paris/">Prix toiture Paris</a> · <a href="/prix-toiture-marseille/">Prix toiture Marseille</a> · <a href="/prix-toiture-lyon/">Prix toiture Lyon</a> · <a href="/prix-toiture-toulouse/">Prix toiture Toulouse</a> · <a href="/prix-toiture-nice/">Prix toiture Nice</a> · <a href="/prix-toiture-nantes/">Prix toiture Nantes</a> · <a href="/prix-toiture-montpellier/">Prix toiture Montpellier</a> · <a href="/prix-toiture-strasbourg/">Prix toiture Strasbourg</a> · <a href="/prix-toiture-bordeaux/">Prix toiture Bordeaux</a> · <a href="/prix-toiture-lille/">Prix toiture Lille</a> · <a href="/prix-toiture-rennes/">Prix toiture Rennes</a> · <a href="/prix-toiture-toulon/">Prix toiture Toulon</a> · <a href="/prix-toiture-reims/">Prix toiture Reims</a> · <a href="/prix-toiture-saint-etienne/">Prix toiture Saint-Étienne</a> · <a href="/prix-toiture-le-havre/">Prix toiture Le Havre</a> · <a href="/prix-toiture-villeurbanne/">Prix toiture Villeurbanne</a> · <a href="/prix-toiture-dijon/">Prix toiture Dijon</a> · <a href="/prix-toiture-grenoble/">Prix toiture Grenoble</a> · <a href="/prix-toiture-angers/">Prix toiture Angers</a> · <a href="/prix-toiture-nimes/">Prix toiture Nîmes</a> · <a href="/prix-toiture-clermont-ferrand/">Prix toiture Clermont-Ferrand</a> · <a href="/prix-toiture-aix-en-provence/">Prix toiture Aix-en-Provence</a> · <a href="/prix-toiture-le-mans/">Prix toiture Le Mans</a> · <a href="/prix-toiture-brest/">Prix toiture Brest</a> · <a href="/prix-toiture-tours/">Prix toiture Tours</a> · <a href="/prix-toiture-amiens/">Prix toiture Amiens</a> · <a href="/prix-toiture-limoges/">Prix toiture Limoges</a> · <a href="/prix-toiture-annecy/">Prix toiture Annecy</a> · <a href="/prix-toiture-perpignan/">Prix toiture Perpignan</a> · <a href="/prix-toiture-metz/">Prix toiture Metz</a></p>
+<p class="foot-villes"><b>International :</b> <a href="/prix-toiture-monaco/">Prix toiture Monaco</a> · <a href="/prix-toiture-belgique/">Prix toiture Belgique</a> · <a href="/prix-toiture-suisse/">Prix toiture Suisse</a></p>
+<p class="foot-www">www.ma-toiture-neuve.fr</p>
+<p class="foot-test">Site de test — non indexé par les moteurs de recherche.</p>
+</div></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const PICTO="data:image/png;base64,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";
+document.getElementById("logoPicto").src=PICTO;
+/* =====================================================================
+   PARAMÈTRES DE CALCUL  (tous modifiables ici)
+   TOTAL = BASE + CHARPENTE + COUVERTURE + OUVERTURES + EP
+   ===================================================================== */
+const CFG = {
+  BASE: 1000,         // base chantier
+  PU_CHARPENTE: 70,   // €/m²
+  PU_EP: 20,          // €/ml (base eaux pluviales)
+  FOURCHETTE: [-0.10, 0.10],
+  VALIDITE_JOURS: 7,
+  PDF_TITRE: "Simulation Calcul de prix Ma Toiture Neuve",
+  RDV_URL: "",        // ← lien de votre page de prise de rendez-vous (ex. "https://votresite.fr/rendez-vous")
+  QR_URL: "https://ma-toiture-neuve.fr/",   // le QR code ci-dessous encode exactement cette adresse
+  QR_LABEL: "ma-toiture-neuve.fr",
+  QR_MATRIX: "11111110000000100110101111111,10000010010011101001101000001,10111010110101011111001011101,10111010011011011010001011101,10111010100010010100101011101,10000010100011000101001000001,11111110101010101010101111111,00000000010101001110000000000,01001010110101111011010110100,00011101111000100010011110111,10000110100100001110010001001,01000000010101111101110000011,00001010100011110101100101001,00010101110100000110001010101,10000011110001111010101010001,00110101011010110000110101010,11111111110000111000110100000,11111100000101000110001110001,00000110101111110010000001001,00001100011010011111100001011,11010111110001101100111111011,00000000110110111011100010111,11111110010001011101101010001,10000010010111110111100011001,10111010110100100011111110010,10111010000110101100000100010,10111010000111101101110000111,10000010111110100110101101011,11111110001111011101110011010",
+  RDV_TEXTE_PDF: "Prenez rendez-vous afin d'obtenir un devis précis et définitif\nvalant offre commerciale",
+  RDV_TEXTE: "Obtenir un rendez-vous pour confirmer mon projet et valider un devis exact",
+  // Pays acceptés : format du code postal, coefficient de zone, mention TVA
+  PAYS: {
+    FR: {l:"France",   re:/^\d{5}$/,      coef:1.0, tvaTxt:"TVA : 10 % pour la rénovation de logements achevés depuis plus de 2 ans ; 20 % pour les logements de moins de 2 ans et les locaux professionnels."},
+    MC: {l:"Monaco",   re:/^980\d{2}$/,   coef:1.2, tvaTxt:"TVA (Monaco, règles françaises) : 10 % pour la rénovation de logements achevés depuis plus de 2 ans ; 20 % pour les logements de moins de 2 ans et les locaux professionnels."},
+    BE: {l:"Belgique", re:/^[1-9]\d{3}$/, coef:1.0, tvaTxt:"TVA (Belgique) : 6 % pour la rénovation d'une habitation privée de plus de 10 ans ; 21 % pour les logements de moins de 10 ans et les locaux professionnels."},
+    CH: {l:"Suisse",   re:/^[1-9]\d{3}$/, coef:1.2, tvaTxt:"TVA (Suisse) : taux normal de 8,1 %. Montants exprimés en euros, conversion en CHF au jour du devis définitif."}
+  },
+  IDF: ["75","77","78","91","92","93","94","95"],
+  DEPT_IDF: 1.2, DEPT_AUTRE: 1.0,
+
+  travaux: {   // coefTypeTravaux
+    entretien:  {l:"Entretien / réparation", s:"Tuiles cassées, fuite, démoussage", c:0.25},
+    partielle:  {l:"Rénovation partielle", s:"Une partie de la toiture", c:0.50},
+    couverture: {l:"Rénovation couverture seule", s:"Charpente conservée", c:0.75},
+    toitcharp:  {l:"Toiture + charpente", s:"Couverture et charpente refaites", c:1.00},
+    demol:      {l:"Démolition + réfection à neuf", s:"Dépose totale et reconstruction", c:1.35}
+  },
+  charp: { oui:{l:"Oui", s:"Charpente à reprendre"}, non:{l:"Non", s:"Couverture uniquement"} },
+  batiment: {  // sert au taux de TVA
+    neuf:     {l:"Logement neuf", s:"Moins de 2 ans", tva:20},
+    recent:   {l:"Logement récent", s:"De 2 à 10 ans", tva:10},
+    ancien:   {l:"Logement ancien", s:"Plus de 10 ans", tva:10},
+    pro:      {l:"Local professionnel", s:"Commerce, bureau, agricole", tva:20}
+  },
+  urgence: {   // coefUrgence
+    urgent: {l:"Travaux urgents", s:"Fuite, sinistre", c:1.2},
+    m12:    {l:"Dans 1 à 2 mois", c:1.1},
+    m36:    {l:"Dans 3 à 6 mois", c:1.1},
+    m612:   {l:"Dans 6 mois à 1 an", c:1.0},
+    a1:     {l:"Dans 1 an et plus", c:1.0}
+  },
+  hauteur: {   // coefH
+    h6:   {l:"Moins de 6 m", s:"Plain-pied", c:0.7},
+    h12:  {l:"6 à 12 m", s:"1 à 3 niveaux", c:0.9},
+    h20:  {l:"12 à 20 m", s:"Petit immeuble", c:1.2},
+    h50:  {l:"20 à 50 m", s:"Immeuble", c:1.5},
+    h50p: {l:"Plus de 50 m", s:"Grande hauteur", c:1.8}
+  },
+  forme: {     // ch = coefFormeCharpente, co = coefFormeCouverture
+    carre: {l:"Carré", ch:1.4, co:2},
+    rect:  {l:"Rectangle", ch:1.2, co:1.5},
+    L:     {l:"En L", ch:1.6, co:1.875},
+    U:     {l:"En U", ch:2, co:2.2},
+    autre: {l:"Autre forme", ch:2.4, co:2.5}
+  },
+  style: {     // coefStyle&Pente : ch = charpente, co = couverture, ep = eaux pluviales
+    plate:  {l:"Toit plat / terrasse", ch:1.2, co:1.1, ep:1.4},
+    mono:   {l:"Monopente", s:"1 pan", ch:1, co:0.9, ep:1},
+    p2:     {l:"Deux pans", ch:1.2, co:1, ep:2},
+    p4:     {l:"Quatre pans", ch:1.4, co:1.2, ep:4},
+    brisis: {l:"Brisis / terrasson", s:"Toit à la Mansart", ch:2, co:1.35, ep:3},
+    coupes: {l:"Pans coupés", s:"Croupes, demi-croupes", ch:1.8, co:1.45, ep:4}
+  },
+  surface: {
+    s1:{l:"Moins de 20 m²", m2:15},  s2:{l:"20 à 40 m²", m2:30},   s3:{l:"40 à 70 m²", m2:55},
+    s4:{l:"70 à 100 m²", m2:85},     s5:{l:"100 à 150 m²", m2:125},s6:{l:"150 à 200 m²", m2:175},
+    s7:{l:"Plus de 200 m²", m2:240}
+  },
+  materiau: {  // PU €/m² couverture
+    beton:   {l:"Tuile béton", pu:30, sw:"beton"},
+    meca:    {l:"Tuile mécanique terre cuite", pu:30, sw:"meca"},
+    canal:   {l:"Tuile canal", s:"Style sud", pu:50, sw:"canal"},
+    vern:    {l:"Tuile vernissée ou colorée", pu:50, sw:"vern"},
+    plate:   {l:"Tuile plate / petites tuiles", pu:70, sw:"plate"},
+    ardoise: {l:"Ardoise", pu:55, sw:"ardoise"},
+    lauze:   {l:"Lauze", s:"Tuile pierre naturelle", pu:55, sw:"lauze"},
+    tav:     {l:"Tavillon", s:"Tuile bois", pu:30, sw:"tav"},
+    chaume:  {l:"Chaume", pu:80, sw:"chaume"},
+    zinc:    {l:"Zinc", pu:60, sw:"zinc"},
+    bac:     {l:"Bac acier", pu:20, sw:"bac"},
+    baciso:  {l:"Bac acier isolé", s:"Panneau sandwich", pu:40, sw:"baciso"},
+    alu:     {l:"Aluminium", pu:65, sw:"alu"},
+    cuivre:  {l:"Cuivre", pu:65, sw:"cuivre"}
+  },
+  ouvertures: { // PU €/unité
+    velux:   {l:"Velux / fenêtre de toit", pu:800},
+    dome:    {l:"Dôme ou puits de lumière", pu:1200},
+    chien:   {l:"Chien assis", pu:2500},
+    chev:    {l:"Lucarne chevalée", pu:3200},
+    lpc:     {l:"Lucarne à pans coupés", pu:3500},
+    oeil:    {l:"Œil-de-bœuf", pu:1500},
+    special: {l:"Autres formes spéciales", pu:1500}
+  },
+  ep: {         // niveau de travaux eaux pluviales
+    neant:     {l:"Néant", s:"Aucun travaux de gouttières", c:0},
+    partielle: {l:"Rénovation partielle", s:"Une partie des gouttières / descentes", c:0.5},
+    totale:    {l:"Rénovation totale ou neuf", s:"Gouttières, descentes, chéneaux", c:1}
+  }
+};
+
+/* ===================================================================== */
+const S = {travaux:null,charp:null,batiment:null,urgence:null,forme:null,style:null,surface:null,hauteur:null,mats:{},ep:null,ouv:{}};
+Object.keys(CFG.ouvertures).forEach(k=>S.ouv[k]=0);
+const $ = s=>document.querySelector(s);
+const STEPS = ["Projet","Toiture","Surface & hauteur","Matériaux","Ouvertures & EP","Coordonnées","Délai"];
+let step = 0;
+
+/* Icônes */
+const IF = { // vue de dessus
+  carre:'<rect x="26" y="8" width="40" height="40" rx="1"/>',
+  rect:'<rect x="10" y="14" width="72" height="30" rx="1"/>',
+  L:'<path d="M18 6h22v28h36v16H18z"/>',
+  U:'<path d="M12 6h20v26h28V6h20v44H12z"/>',
+  autre:'<path d="M20 8h36l20 16-6 26H28L12 32z"/>'
+};
+const IS = { // vue de face
+  plate:'<path d="M18 50V24h56v26"/><path d="M12 24h68" stroke-width="4"/><path d="M14 24v-5M78 24v-5"/>',
+  mono:'<path d="M16 50V28l60-14v36"/><path d="M10 29 82 12"/>',
+  p2:'<path d="M18 50V30h56v20"/><path d="M10 32 46 9l36 23"/>',
+  p4:'<path d="M14 50V32h64v18"/><path d="M8 34 32 13h28l24 21"/><path d="M32 13 26 32M60 13l6 19"/>',
+  brisis:'<path d="M16 50V34h60v16"/><path d="M12 36 22 18h48l10 18"/><path d="M22 18 34 9h24l12 9"/>',
+  coupes:'<path d="M18 50V30h56v20"/><path d="M10 32 34 15h24l24 17"/><path d="M34 15l5-6h14l5 6"/>'
+};
+const ico = (set,k)=>`<svg class="ico" viewBox="0 0 92 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" style="color:#192a3d">${set[k]}</svg>`;
+
+function buildGroup(el){
+  const g = el.dataset.group, src = CFG[g];
+  el.innerHTML = Object.entries(src).map(([k,o])=>{
+    let vis = "";
+    if(g==="forme") vis = ico(IF,k);
+    if(g==="style") vis = ico(IS,k);
+    if(g==="materiau") vis = `<div class="swatch sw-${o.sw}"></div>`;
+    let sub = o.s ? `<small>${o.s}</small>` : "";
+    if(g==="surface") sub = `<small>≈ ${o.m2} m² retenus</small>`;
+    return `<button type="button" class="opt" data-k="${g}" data-v="${k}">${vis}<span>${o.l}</span>${sub}</button>`;
+  }).join("");
+}
+document.querySelectorAll("[data-group]").forEach(buildGroup);
+
+$("#ouvertures").innerHTML = Object.entries(CFG.ouvertures).map(([k,o])=>
+  `<div class="item" id="it_${k}"><div class="t">${o.l}</div>
+   <div class="qty"><button type="button" data-q="${k}" data-d="-1" aria-label="Moins">−</button><output id="q_${k}">0</output><button type="button" data-q="${k}" data-d="1" aria-label="Plus">+</button></div></div>`).join("");
+
+document.addEventListener("click",e=>{
+  const b = e.target.closest(".opt");
+  if(b){
+    const k=b.dataset.k, v=b.dataset.v;
+    if(k==="materiau"){ toggleMat(b,v); return; }
+    S[k]=v;
+    b.parentElement.querySelectorAll(".opt").forEach(x=>x.classList.toggle("sel",x===b));
+    if(k==="surface") $("#surfaceExact").value="";
+    refreshConditional(); $("#msg").textContent="";
+    return;
+  }
+  const q = e.target.closest("[data-q]");
+  if(q){
+    const k=q.dataset.q; S.ouv[k]=Math.max(0,Math.min(30,S.ouv[k]+Number(q.dataset.d)));
+    $("#q_"+k).textContent=S.ouv[k]; $("#it_"+k).classList.toggle("on",S.ouv[k]>0);
+  }
+});
+/* Matériaux multiples : surface partagée à parts égales, ajustable en % */
+function toggleMat(b,v){
+  if(S.mats[v]!==undefined) delete S.mats[v]; else S.mats[v]=0;
+  b.classList.toggle("sel", S.mats[v]!==undefined);
+  const keys=Object.keys(S.mats), n=keys.length;
+  keys.forEach((k,i)=>S.mats[k]= n ? Math.floor(100/n) + (i < 100%n ? 1 : 0) : 0);
+  renderRepart(); $("#msg").textContent="";
+}
+function renderRepart(){
+  const keys=Object.keys(S.mats);
+  $("#qRepart").classList.toggle("hide", keys.length<2);
+  $("#repart").innerHTML=keys.map(k=>`<div class="item on"><div class="t">${CFG.materiau[k].l}</div><input type="number" class="pct" min="0" max="100" step="5" data-m="${k}" value="${S.mats[k]}"><span style="font-weight:800">%</span></div>`).join("");
+  $("#repart").querySelectorAll("input").forEach(inp=>inp.addEventListener("input",()=>{ S.mats[inp.dataset.m]=Math.max(0,Math.min(100,Number(inp.value)||0)); repTotal(); $("#msg").textContent=""; }));
+  repTotal();
+}
+const matTotal=()=>Object.values(S.mats).reduce((a,b)=>a+b,0);
+function repTotal(){ const t=matTotal(); const el=$("#repTotal"); el.textContent=`Total : ${t} %`+(t===100?" ✓":" — doit faire 100 %"); el.classList.toggle("bad",t!==100); }
+function refreshConditional(){ $("#qCharp").classList.toggle("hide", S.travaux!=="partielle"); }
+[["#pays","#cp"],["#cPays","#cCp"]].forEach(([s,i])=>$(s).addEventListener("change",()=>{
+  const v=$(s).value; $(i).maxLength = (v==="BE"||v==="CH")?4:5; $(i).placeholder={FR:"75011",MC:"98000",BE:"1000",CH:"1201"}[v]; $(i).classList.remove("err"); }));
+$("#diff").addEventListener("change",e=>$("#chantierBox").classList.toggle("hide",!e.target.checked));
+$("#surfaceExact").addEventListener("input",e=>{
+  const v=Number(e.target.value); if(!v) return;
+  const k = v<20?"s1":v<40?"s2":v<70?"s3":v<100?"s4":v<150?"s5":v<200?"s6":"s7";
+  S.surface=k;
+  document.querySelectorAll('[data-k="surface"]').forEach(x=>x.classList.toggle("sel",x.dataset.v===k));
+});
+
+/* Navigation */
+function renderProgress(){
+  $("#progress").innerHTML = STEPS.map((_,i)=>`<span class="${i<=step?'on':''}"></span>`).join("");
+  $("#stepinfo").textContent = `Étape ${step+1} sur ${STEPS.length} — ${STEPS[step]}`;
+}
+function show(i){
+  step=i;
+  document.querySelectorAll(".step").forEach(s=>s.classList.toggle("on",Number(s.dataset.step)===i));
+  $("#prev").style.visibility = i===0?"hidden":"visible";
+  $("#next").textContent = i===STEPS.length-1 ? "Générer mon devis PDF" : "Suivant →";
+  $("#msg").textContent="";
+  renderProgress(); refreshConditional();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+const need = keys=>keys.filter(k=>!S[k]);
+function validate(){
+  let miss=[];
+  if(step===0) miss=need(S.travaux==="partielle"?["travaux","charp","batiment"]:["travaux","batiment"]);
+  if(step===1) miss=need(["forme","style"]);
+  if(step===2) miss=need(["surface","hauteur"]);
+  if(step===3){
+    if(!Object.keys(S.mats).length){ $("#msg").textContent="Choisissez au moins un matériau de couverture."; return false; }
+    if(Object.keys(S.mats).length>1 && matTotal()!==100){ $("#msg").textContent="La répartition des matériaux doit faire 100 %."; return false; }
+  }
+  if(step===4) miss=need(["ep"]);
+  if(step===6) miss=need(["urgence"]);
+  if(miss.length){ $("#msg").textContent="Merci de répondre à toutes les questions de cette étape."; return false; }
+  if(step===5) return validateContact();
+  return true;
+}
+function validateContact(){
+  const ids=["prenom","nom","email","tel","adr","cp","ville"];
+  if($("#diff").checked) ids.push("cAdr","cCp","cVille");
+  let ok=true;
+  ids.forEach(id=>{
+    const el=$("#"+id), v=el.value.trim(); let bad=!v;
+    if(id==="email") bad=!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if(id==="cp") bad=!CFG.PAYS[$("#pays").value].re.test(v);
+    if(id==="cCp") bad=!CFG.PAYS[$("#cPays").value].re.test(v);
+    if(id==="tel") bad=v.replace(/[^\d]/g,"").length<9;
+    el.classList.toggle("err",bad); if(bad) ok=false;
+  });
+  if(!ok){ $("#msg").textContent="Merci de vérifier les champs en rouge."; return false; }
+  if(!$("#rgpd").checked){ $("#msg").textContent="Merci d'accepter l'utilisation de vos informations pour recevoir votre simulation."; return false; }
+  return true;
+}
+$("#next").addEventListener("click",()=>{ if(!validate()) return; if(step<STEPS.length-1) show(step+1); else runLoader(); });
+$("#prev").addEventListener("click",()=>{ if(step>0) show(step-1); });
+document.querySelectorAll("input").forEach(i=>i.addEventListener("input",()=>i.classList.remove("err")));
+
+/* =====================================================================
+   ALGORITHME
+   BASE        = 1000 × coefDept × coefUrg × coefH × coefType × coefFormeCouv × coefStyleCouv
+   CHARPENTE   = 70 × m² × coefDept × coefUrg × coefH × coefType × coefFormeCharp × coefStyleCharp
+   COUVERTURE  = PU × m² × coefDept × coefUrg × coefH × coefType × coefFormeCouv × coefStyleCouv
+   OUVERTURES  = Σ(PU × U) × coefDept × coefUrg × coefH × coefType × coefStyleCouv
+   EP          = 20 × coefDept × coefUrg × coefType × (m²/2 en ml) × coefStyleEP × coefNiveauEP
+   ===================================================================== */
+const r2 = n=>Math.round(n*100)/100;
+function compute(){
+  const cp = ($("#diff").checked ? $("#cCp").value : $("#cp").value).trim();
+  const pays = $("#diff").checked ? $("#cPays").value : $("#pays").value;
+  const dept = pays==="FR" ? cp.slice(0,2) : cp;
+  const idf = pays==="FR" && CFG.IDF.includes(dept);
+  const exact = Number($("#surfaceExact").value);
+  const m2 = exact>0 ? exact : CFG.surface[S.surface].m2;
+  const ml = m2/2;
+  const fo = CFG.forme[S.forme], st = CFG.style[S.style];
+  const c = {
+    dept: pays==="FR" ? (idf ? CFG.DEPT_IDF : CFG.DEPT_AUTRE) : CFG.PAYS[pays].coef,
+    urg: CFG.urgence[S.urgence].c,
+    H: CFG.hauteur[S.hauteur].c,
+    type: CFG.travaux[S.travaux].c,
+    fCh: fo.ch, fCo: fo.co, sCh: st.ch, sCo: st.co, sEP: st.ep,
+    nEP: CFG.ep[S.ep].c
+  };
+  const charpente = S.travaux==="toitcharp" || S.travaux==="demol" || (S.travaux==="partielle" && S.charp==="oui");
+  const mk = Object.keys(S.mats), tot = mk.length>1 ? matTotal() : 1;
+  const parts = mk.map(key=>({key, l:CFG.materiau[key].l, pu:CFG.materiau[key].pu, w: mk.length>1 ? S.mats[key]/tot : 1}));
+  const puMoy = parts.reduce((a,p)=>a+p.pu*p.w,0);
+  const matTxt = parts.map(p=>mk.length>1?`${p.l} ${Math.round(p.w*100)} %`:p.l).join(" · ");
+  const k = c.dept*c.urg*c.H*c.type;   // tronc commun
+
+  const BASE = CFG.BASE * k * c.fCo * c.sCo;
+  const CHARPENTE = charpente ? CFG.PU_CHARPENTE * m2 * k * c.fCh * c.sCh : 0;
+  const COUVERTURE = puMoy * m2 * k * c.fCo * c.sCo;   // Σ PU_i × (m² × part_i)
+  let sumOuv=0, ouvList=[];
+  Object.entries(S.ouv).forEach(([key,q])=>{ if(q>0){ sumOuv+=CFG.ouvertures[key].pu*q; ouvList.push(`${q} × ${CFG.ouvertures[key].l.toLowerCase()}`);} });
+  const OUVERTURES = sumOuv * k * c.sCo;
+  const EP = CFG.PU_EP * c.dept * c.urg * c.type * ml * c.sEP * c.nEP;
+
+  const tva = pays==="BE" ? (S.batiment==="ancien" ? 6 : 21) : pays==="CH" ? 8.1 : CFG.batiment[S.batiment].tva;
+  const lines = [
+    {k:"BASE", l:"Préparation de chantier", d:"Installation, déplacement, sécurité, protections, évacuation des déchets", v:BASE},
+    {k:"CHARPENTE", l:"Charpente", d: charpente ? `${CFG.forme[S.forme].l} · ${st.l.toLowerCase()} · ${fmtN(m2)} m²` : "Non concernée (néant)", v:CHARPENTE},
+    {k:"COUVERTURE", l:"Couverture", d:`${matTxt} · ${CFG.travaux[S.travaux].l.toLowerCase()} · ${fmtN(m2)} m²`, v:COUVERTURE},
+    {k:"OUVERTURES", l:"Ouvertures et Fenêtres de toit", d: ouvList.length ? ouvList.join(", ") : "Aucune ouverture", v:OUVERTURES},
+    {k:"EP", l:"Eaux pluviales", d: S.ep==="neant" ? "Néant" : `${CFG.ep[S.ep].l} · ≈ ${fmtN(ml)} ml`, v:EP}
+  ];
+  lines.forEach(x=>x.v=r2(x.v));
+  const HT = r2(lines.reduce((a,x)=>a+x.v,0));
+  const TVA = r2(HT*tva/100);
+  const TTC = r2(HT+TVA);
+  return {pays, dept, idf, m2, ml, c, k, charpente, puCo:Math.round(puMoy*100)/100, matTxt, sumOuv, lines, HT, tva, TVA, TTC,
+    min: Math.round(TTC*(1+CFG.FOURCHETTE[0])/10)*10, max: Math.round(TTC*(1+CFG.FOURCHETTE[1])/10)*10};
+}
+
+/* Formatage */
+function fmtN(n,dec=0){
+  const neg=n<0; n=Math.abs(n);
+  let [i,d]=n.toFixed(dec).split(".");
+  i=i.replace(/\B(?=(\d{3})+(?!\d))/g," ");
+  return (neg?"-":"")+i+(d?","+d:"");
+}
+const eur=(n,dec=0)=>fmtN(n,dec)+" €";
+const pct=t=>String(t).replace(".",",")+" %";
+const f=n=>String(Math.round(n*1000)/1000).replace(".",",");
+
+/* Préloader */
+function buildTiles(){
+  let h="", i=0;
+  for(let row=0;row<5;row++){
+    const y=20+row*12, half=22+row*16;
+    for(let x=95-half; x<95+half-10; x+=14)
+      h+=`<rect class="tile" x="${x}" y="${y}" width="13" height="11" rx="2" fill="${row%2?'#237a34':'#3aa845'}" style="animation-delay:${(i++)*0.06}s"/>`;
+  }
+  $("#tiles").innerHTML=h;
+}
+function runLoader(){
+  ["#form","#progress","#stepinfo","#hero"].forEach(s=>$(s).style.display="none");
+  $("#loader").classList.add("on"); buildTiles();
+  const msgs=["Analyse de votre zone géographique…","Calcul de la préparation de chantier…","Calcul de la charpente…","Métré de la couverture…","Chiffrage des ouvertures…","Calcul des eaux pluviales…","Finalisation de votre devis…"];
+  const dur=5200, t0=performance.now(), R=compute();
+  (function tick(now){
+    const p=Math.min(1,(now-t0)/dur);
+    $("#loadbar").style.width=(p*100)+"%";
+    $("#loadpct").textContent=Math.round(p*100)+" %";
+    $("#loadtxt").textContent=msgs[Math.min(msgs.length-1,Math.floor(p*msgs.length))];
+    if(p<1) requestAnimationFrame(tick); else setTimeout(()=>showResult(R),350);
+  })(t0);
+}
+
+/* Résultat */
+let RESULT=null, QUOTE=null;
+function showResult(R){
+  RESULT=R;
+  const d=new Date(), pad=n=>String(n).padStart(2,"0");
+  QUOTE={num:`CPT-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${Math.floor(1000+Math.random()*9000)}`, date:d, valid:new Date(d.getTime()+CFG.VALIDITE_JOURS*864e5)};
+  $("#loader").classList.remove("on"); $("#result").classList.add("on");
+  $("#resSub").textContent=`${$("#civ").value} ${$("#nom").value.trim().toUpperCase()} — devis n° ${QUOTE.num}`;
+  $("#resTotal").textContent=eur(R.TTC);
+  $("#resRange").innerHTML=`Fourchette estimée<br><b>${eur(R.min)} – ${eur(R.max)} TTC</b>`;
+  $("#rdvBtn span").textContent=CFG.RDV_TEXTE;
+  if(CFG.RDV_URL) $("#rdvBtn").href=CFG.RDV_URL;
+  else $("#rdvBtn").onclick=e=>{ e.preventDefault(); toast("Lien de prise de rendez-vous à configurer (RDV_URL)."); };
+  let h=R.lines.map(x=>`<tr><td>${x.l}<small>${x.d}</small></td><td>${eur(x.v,2)} HT</td></tr>`).join("");
+  h+=`<tr class="sum"><td style="padding-top:14px">Total HT</td><td style="padding-top:14px">${eur(R.HT,2)}</td></tr>`;
+  h+=`<tr class="sum"><td>TVA ${pct(R.tva)}</td><td>${eur(R.TVA,2)}</td></tr>`;
+  h+=`<tr class="sum ttc"><td>Total TTC</td><td>${eur(R.TTC,2)}</td></tr>`;
+  $("#resTable").innerHTML=h;
+  $("#algo").textContent=algoText(R);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function algoText(R){
+  const c=R.c, L=R.lines;
+  return `${R.pays==="FR"?`Département chantier ${R.dept} (${R.idf?"Paris / IDF":"hors IDF"})`:`Chantier : ${CFG.PAYS[R.pays].l} (${R.dept})`} → coefDept = ${f(c.dept)}
+coefUrg = ${f(c.urg)} · coefH = ${f(c.H)} · coefType = ${f(c.type)}
+coefFormeCharp = ${f(c.fCh)} · coefFormeCouv = ${f(c.fCo)}
+coefStyleCharp = ${f(c.sCh)} · coefStyleCouv = ${f(c.sCo)} · coefStyleEP = ${f(c.sEP)} · coefNiveauEP = ${f(c.nEP)}
+Surface = ${f(R.m2)} m² · Linéaire EP = m²/2 = ${f(R.ml)} ml
+
+BASE       = 1000 × ${f(c.dept)} × ${f(c.urg)} × ${f(c.H)} × ${f(c.type)} × ${f(c.fCo)} × ${f(c.sCo)} = ${eur(L[0].v,2)}
+CHARPENTE  = ${R.charpente ? `70 × ${f(R.m2)} × ${f(c.dept)} × ${f(c.urg)} × ${f(c.H)} × ${f(c.type)} × ${f(c.fCh)} × ${f(c.sCh)}` : "néant"} = ${eur(L[1].v,2)}
+COUVERTURE = PU moyen ${f(R.puCo)} €/m² (${R.matTxt}) × ${f(R.m2)} × ${f(c.dept)} × ${f(c.urg)} × ${f(c.H)} × ${f(c.type)} × ${f(c.fCo)} × ${f(c.sCo)} = ${eur(L[2].v,2)}
+OUVERTURES = ${fmtN(R.sumOuv)} × ${f(c.dept)} × ${f(c.urg)} × ${f(c.H)} × ${f(c.type)} × ${f(c.sCo)} = ${eur(L[3].v,2)}
+EP         = 20 × ${f(c.dept)} × ${f(c.urg)} × ${f(c.type)} × ${f(R.ml)} × ${f(c.sEP)} × ${f(c.nEP)} = ${eur(L[4].v,2)}
+
+TOTAL HT = ${eur(R.HT,2)} · TVA ${pct(R.tva)} = ${eur(R.TVA,2)} · TOTAL TTC = ${eur(R.TTC,2)}`;
+}
+$("#restart").addEventListener("click",()=>{
+  $("#result").classList.remove("on");
+  ["#form","#progress","#stepinfo","#hero"].forEach(s=>$(s).style.display="");
+  show(0);
+});
+
+/* =====================================================================
+   GÉNÉRATION DU PDF (jsPDF)
+   ===================================================================== */
+const clean = s=>String(s).replace(/[  ]/g," ").replace(/≈/g,"env.").replace(/[−–]/g,"-").replace(/Œ/g,"Oe").replace(/œ/g,"oe");
+const dFR = d=>d.toLocaleDateString("fr-FR",{day:"2-digit",month:"2-digit",year:"numeric"});
+
+function buildPDF(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:"mm",format:"a4"});
+  const W=210, M=15, R=RESULT;
+  const GR=[47,158,68], LG=[93,188,36], NV=[25,42,61], MU=[107,123,140], LN=[222,229,225], PG=[240,248,236], PGR=[246,248,247];
+  const T=(s,x,y,o)=>doc.text(clean(s),x,y,o);
+  const font=(st,sz,col)=>{doc.setFont("helvetica",st);doc.setFontSize(sz);doc.setTextColor(...(col||NV));};
+  const tw=(s,st,sz)=>{doc.setFont("helvetica",st);doc.setFontSize(sz);return doc.getTextWidth(clean(s));};
+  const WWW="www."+CFG.QR_LABEL; let WM_Y=150;
+  doc.setProperties({title:CFG.PDF_TITRE, subject:"Simulation de devis toiture", author:"Ma Toiture Neuve"});
+
+  // Bandeau de section : dégradé vert clair qui s'estompe vers la droite
+  const band=(title,y)=>{
+    const h=8.5, x0=M, x1=W-M, n=60, c0=[200,232,180], c1=[228,244,218];
+    for(let i=0;i<n;i++){
+      const t=i/(n-1), x=x0+(x1-x0)*t, w=(x1-x0)/n+0.15;
+      const fade=t>0.82?(t-0.82)/0.18:0;
+      const c=c0.map((v,k)=>{ const base=v+(c1[k]-v)*t; return Math.round(base+(255-base)*fade); });
+      doc.setFillColor(...c); doc.rect(x,y,w,h,"F");
+    }
+    doc.setFillColor(...LG); doc.rect(x0,y,1.2,h,"F");
+    font("bold",12.5,NV); T(title,x0+5,y+5.9);
+  };
+  const footer=()=>{
+    doc.setDrawColor(...LG); doc.setLineWidth(.7); doc.line(M,279,W-M,279);
+    font("bold",13,GR); T(WWW,W/2,286,{align:"center"});
+    font("normal",7.2,MU); T(CFG.PDF_TITRE+" - document généré le "+dFR(QUOTE.date),M,292.5);
+  };
+  const watermark=()=>{
+    const a=20, rad=a*Math.PI/180, cx=W/2, cy=WM_Y;
+    const line=(txt,size,off)=>{ doc.setFont("helvetica","bold"); doc.setFontSize(size);
+      const w=doc.getTextWidth(txt), px=cx+off*Math.sin(rad), py=cy+off*Math.cos(rad);
+      doc.text(txt, px-(w/2)*Math.cos(rad), py+(w/2)*Math.sin(rad), {angle:a, renderingMode:"fillThenStroke"}); };
+    doc.saveGraphicsState();
+    doc.setGState(new doc.GState({opacity:0.22, "stroke-opacity":0.9}));
+    doc.setTextColor(120,128,136); doc.setDrawColor(205,210,214); doc.setLineWidth(0.22);
+    line("SIMULATION",40,-3); line("OFFRE PROVISOIRE",22,10);
+    doc.restoreGraphicsState();
+  };
+
+  /* ---------- EN-TÊTE ---------- */
+  // Logo : "ma-toiture-neuve.fr" dans un double cadre vert / bleu ciel, picto maison dessous
+  font("normal",10.5,LG); const wmW=doc.getTextWidth(CFG.QR_LABEL)+6, wmH=6.6, wmX=M, wmY=5.5;
+  doc.setDrawColor(17,233,184); doc.setLineWidth(.45); doc.rect(wmX-1,wmY-1,wmW+2,wmH+2,"S");
+  doc.setDrawColor(...LG); doc.setLineWidth(.6); doc.rect(wmX,wmY,wmW,wmH,"S");
+  T(CFG.QR_LABEL,wmX+wmW/2,wmY+4.7,{align:"center"});
+  doc.addImage(PICTO,"PNG",wmX+wmW/2-7,wmY+wmH+2.2,14,11);
+  const cX=68;
+  const p1="Calcul de Prix ";
+  const p1W=tw(p1,"bold",13.5);
+  font("bold",13.5,NV); T(p1,cX,14.5);
+  font("bold",13.5,GR); T("Ma Toiture Neuve",cX+p1W,14.5);
+  font("bold",13.5,NV); T("Simulation Devis Travaux offerte",cX,21.5);
+  font("bold",10.5,GR); T(WWW,W-M,13,{align:"right"});
+  font("bold",7.6,NV); T("DATE : "+dFR(QUOTE.date),W-M,18,{align:"right"});
+  T("SIMULATION VALABLE "+CFG.VALIDITE_JOURS+" JOURS",W-M,22.3,{align:"right"});
+
+  /* ---------- ENCART CLIENT ---------- */
+  let y=28; const bh=24;
+  doc.setDrawColor(...LG); doc.setLineWidth(.6); doc.setFillColor(255,255,255); doc.roundedRect(M,y,W-2*M,bh,3.5,3.5,"FD");
+  const ix=M+5;
+  const lab="DEMANDE DE DEVIS / RÉFÉRENCE N° ";
+  const labW=tw(lab,"bold",7.6);
+  font("bold",7.6,GR); T(lab,ix,y+5.6); font("bold",8,NV); T(QUOTE.num,ix+labW,y+5.6);
+  const nom=`${$("#civ").value} ${$("#prenom").value.trim()} ${$("#nom").value.trim().toUpperCase()}`;
+  font("bold",11.5,NV); T(nom,ix,y+11.6);
+  font("bold",10.5,NV); T($("#tel").value.trim(),M+(W-2*M)/2,y+11.6,{align:"center"});
+  font("bold",10.5,NV); T($("#email").value.trim(),W-M-5,y+11.6,{align:"right"});
+  const paysTxt=id=>{ const v=$(id).value; return v==="FR"?"":", "+CFG.PAYS[v].l; };
+  font("normal",8.8,NV); T(`${$("#adr").value.trim()}, ${$("#cp").value.trim()} ${$("#ville").value.trim()}${paysTxt("#pays")}`,ix,y+16.3);
+  const diff=$("#diff").checked;
+  const lab2="Adresse du chantier : ";
+  const lab2W=tw(lab2,"bold",7.8);
+  font("bold",7.8,GR); T(lab2,ix,y+21.2);
+  font("normal",8.8,NV); T(diff?`${$("#cAdr").value.trim()}, ${$("#cCp").value.trim()} ${$("#cVille").value.trim()}${paysTxt("#cPays")}`:"Domicile",ix+lab2W,y+21.2);
+  y+=bh+6;
+
+  /* ---------- VOTRE PROJET ---------- */
+  band("Votre Projet Ma Toiture Neuve",y); y+=14;
+  const ouvTxt=Object.entries(S.ouv).filter(([,q])=>q>0).map(([k,q])=>`${q} ${CFG.ouvertures[k].l.toLowerCase()}`).join(", ")||"Aucune";
+  const kv=[
+    ["Type de travaux",CFG.travaux[S.travaux].l],["Bâtiment",CFG.batiment[S.batiment].l+" ("+CFG.batiment[S.batiment].s.toLowerCase()+")"],
+    ["Forme du bâtiment",CFG.forme[S.forme].l],["Type de toiture",CFG.style[S.style].l],
+    ["Surface",fmtN(R.m2)+" m²"],["Hauteur",CFG.hauteur[S.hauteur].l],
+    ["Charpente",R.charpente?"Concernée":"Non concernée"],["Eaux pluviales",CFG.ep[S.ep].l],
+    ["Délai",CFG.urgence[S.urgence].l],null
+  ];
+  const kvFull=[["Couverture",R.matTxt],["Ouvertures",ouvTxt]];   // lignes pleine largeur
+  const cw=(W-2*M)/2, rh=5.4;
+  const nRows=kv.length/2;
+  kv.forEach((p,i)=>{
+    const x=M+(i%2)*cw, row=Math.floor(i/2), yy=y+row*rh;
+    if(i%2===0 && row%2===1){ doc.setFillColor(...PGR); doc.rect(M,yy-3.7,W-2*M,rh,"F"); }
+    if(!p) return;
+    font("normal",8.3,MU); T(p[0],x+2,yy);
+    font("bold",8.7); T(doc.splitTextToSize(clean(p[1]),cw-36)[0],x+34,yy);
+  });
+  kvFull.forEach((p,j)=>{
+    const row=nRows+j, yy=y+row*rh;
+    if(row%2===1){ doc.setFillColor(...PGR); doc.rect(M,yy-3.7,W-2*M,rh,"F"); }
+    font("normal",8.3,MU); T(p[0],M+2,yy);
+    font("bold",8.7); T(doc.splitTextToSize(clean(p[1]),W-2*M-36)[0],M+34,yy);
+  });
+  y+=(nRows+kvFull.length)*rh+4;
+
+  /* ---------- ESTIMATION ---------- */
+  band("Estimation détaillée",y); y+=14;
+  font("bold",8,GR); T("POSTE DE TRAVAUX",M+2,y); T("MONTANT HT",W-M-2,y,{align:"right"});
+  y+=2.2; doc.setDrawColor(...LG); doc.setLineWidth(.4); doc.line(M,y,W-M,y);
+  const tStart=y;
+  R.lines.forEach(x=>{
+    const det=doc.splitTextToSize(clean(x.d),W-2*M-50), h=7+det.length*3.8;
+    if(y+h>262){ footer(); doc.addPage(); y=20; }
+    font("bold",10); T(x.l,M+2,y+5.4);
+    font("normal",8,MU); det.forEach((l,i)=>T(l,M+2,y+9.4+i*3.8));
+    font("bold",10); T(eur(x.v,2),W-M-2,y+5.4,{align:"right"});
+    y+=h+1.6; doc.setDrawColor(...LN); doc.setLineWidth(.25); doc.line(M,y,W-M,y);
+  });
+  if(doc.getNumberOfPages()===1) WM_Y=(tStart+y)/2+4;
+
+  /* ---------- TOTAUX ---------- */
+  if(y+70>276){ footer(); doc.addPage(); y=20; }
+  y+=7; const tx=W-M-80;
+  font("normal",9.5); T("Total HT",tx,y); font("bold",9.5); T(eur(R.HT,2),W-M-2,y,{align:"right"});
+  y+=5.8; font("normal",9.5); T("TVA "+pct(R.tva),tx,y); T(eur(R.TVA,2),W-M-2,y,{align:"right"});
+  y+=3.8; doc.setFillColor(...PG); doc.setDrawColor(...LG); doc.setLineWidth(.6); doc.roundedRect(tx-4,y,84,11.5,2.5,2.5,"FD");
+  font("bold",11.5,NV); T("TOTAL TTC",tx,y+7.6); font("bold",12.5,GR); T(eur(R.TTC,2),W-M-2,y+7.6,{align:"right"});
+  // Fourchette
+  const fy=y-11.5, fw=tx-M-10, fh=23;
+  doc.setDrawColor(...LN); doc.setLineWidth(.3); doc.setFillColor(...PGR); doc.roundedRect(M,fy,fw,fh,2.5,2.5,"FD");
+  font("bold",7.8,GR); T("FOURCHETTE ESTIMÉE",M+5,fy+6);
+  font("bold",13); T(`${eur(R.min)} - ${eur(R.max)}`,M+5,fy+13.2);
+  font("normal",7.6,MU); T("TTC, selon les constats de la visite technique",M+5,fy+19);
+  y+=19;
+
+  /* ---------- RENDEZ-VOUS + QR ---------- */
+  const qs=27, qx=W-M-qs, bwC=W-2*M-qs-6, cxC=M+bwC/2;
+  doc.setDrawColor(...LG); doc.setLineWidth(.6); doc.setFillColor(...PG); doc.roundedRect(M,y,bwC,qs,3,3,"FD");
+  font("bold",12.5,NV); T("Estimation provisoire de vos travaux",cxC,y+6.8,{align:"center"});
+  font("bold",11.5,GR);
+  CFG.RDV_TEXTE_PDF.split("\n").forEach((l,i)=>T(l,cxC,y+12.4+i*5,{align:"center"}));
+  if(CFG.RDV_URL) doc.link(M,y,bwC,qs,{url:CFG.RDV_URL});
+  const s1="Scannez ce QR code ou rendez-vous sur ";
+  const w1=tw(s1,"normal",8), w2=tw(WWW,"bold",8), sx=cxC-(w1+w2)/2;
+  font("normal",8,MU); T(s1,sx,y+qs-3.6); font("bold",8,NV); T(WWW,sx+w1,y+qs-3.6);
+  doc.setDrawColor(...LN); doc.setLineWidth(.3); doc.setFillColor(255,255,255); doc.roundedRect(qx,y,qs,qs,3,3,"FD");
+  const QM=CFG.QR_MATRIX.split(","), qn=QM.length, pad=2, ms=(qs-2*pad)/qn;
+  doc.setFillColor(...NV);
+  QM.forEach((row,r)=>{ for(let c=0;c<qn;c++) if(row[c]==="1") doc.rect(qx+pad+c*ms,y+pad+r*ms,ms+0.02,ms+0.02,"F"); });
+  doc.link(qx,y,qs,qs,{url:CFG.QR_URL});
+  y+=qs+5;
+
+  /* ---------- MENTIONS ---------- */
+  const ment=[
+    "Simulation indicative et non contractuelle, calculée à partir des informations déclarées. Seule une visite technique sur site permet d'établir un devis définitif. Prix en euros, fourniture et pose comprises, "+((R.pays==="FR"||R.pays==="MC")?"hors aides (MaPrimeRénov', CEE, éco-PTZ).":"hors primes et aides éventuelles."),
+    CFG.PAYS[R.pays].tvaTxt
+  ];
+  if(y>266){ footer(); doc.addPage(); y=20; }
+  font("normal",7,MU);
+  ment.forEach(m=>{ doc.splitTextToSize(clean(m),W-2*M).forEach(l=>{ T(l,M,y); y+=3.3; }); y+=1; });
+
+  footer();
+  const n=doc.getNumberOfPages();
+  for(let i=1;i<=n;i++){ doc.setPage(i); watermark(); font("normal",7.2,MU); T(`Page ${i} / ${n}`,W-M,292.5,{align:"right"}); }
+  return doc;
+}
+
+let downloadsP=null;
+try{ if(window.claude && typeof window.claude.use==="function") downloadsP=window.claude.use("downloads"); }catch(e){}
+function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("on"); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove("on"),3800); }
+$("#pdfBtn").addEventListener("click", async ()=>{
+  if(!window.jspdf){ toast("Le module PDF est en cours de chargement, réessayez dans un instant."); return; }
+  const doc=buildPDF(), fname=`Simulation-Calcul-de-prix-Ma-Toiture-Neuve-${QUOTE.num}.pdf`;
+  let dl=null; try{ dl=downloadsP?await downloadsP:null; }catch(e){ dl=null; }
+  if(dl){
+    try{ await dl.save({filename:fname,data:doc.output("arraybuffer")}); toast("Votre devis PDF a été téléchargé."); }
+    catch(err){ toast(err&&err.code==="declined"?"Téléchargement annulé.":"Le téléchargement n'est pas disponible ici."); }
+  } else {
+    try{ doc.save(fname); }catch(e){ toast("Le téléchargement n'est pas disponible dans cet affichage."); }
+  }
+});
+
+show(0);
+</script>
+<div class="drawer" id="drawer" aria-hidden="true"><div class="drawer-in">
+<div class="drawer-h"><b>Toutes nos pages prix</b><button class="x" onclick="toggleMenu(false)" aria-label="Fermer">✕</button></div>
+<a class="btn btn-full" href="/#simulateur" onclick="toggleMenu(false)">Obtenir mon prix en direct →</a>
+<input class="filter" placeholder="Rechercher une ville, un département…" oninput="filterMenu(this.value)">
+<h4>Prix toiture par ville</h4><ul><li><a href="/prix-toiture-paris/">Paris</a></li><li><a href="/prix-toiture-marseille/">Marseille</a></li><li><a href="/prix-toiture-lyon/">Lyon</a></li><li><a href="/prix-toiture-toulouse/">Toulouse</a></li><li><a href="/prix-toiture-nice/">Nice</a></li><li><a href="/prix-toiture-nantes/">Nantes</a></li><li><a href="/prix-toiture-montpellier/">Montpellier</a></li><li><a href="/prix-toiture-strasbourg/">Strasbourg</a></li><li><a href="/prix-toiture-bordeaux/">Bordeaux</a></li><li><a href="/prix-toiture-lille/">Lille</a></li><li><a href="/prix-toiture-rennes/">Rennes</a></li><li><a href="/prix-toiture-toulon/">Toulon</a></li><li><a href="/prix-toiture-reims/">Reims</a></li><li><a href="/prix-toiture-saint-etienne/">Saint-Étienne</a></li><li><a href="/prix-toiture-le-havre/">Le Havre</a></li><li><a href="/prix-toiture-villeurbanne/">Villeurbanne</a></li><li><a href="/prix-toiture-dijon/">Dijon</a></li><li><a href="/prix-toiture-grenoble/">Grenoble</a></li><li><a href="/prix-toiture-angers/">Angers</a></li><li><a href="/prix-toiture-nimes/">Nîmes</a></li><li><a href="/prix-toiture-clermont-ferrand/">Clermont-Ferrand</a></li><li><a href="/prix-toiture-aix-en-provence/">Aix-en-Provence</a></li><li><a href="/prix-toiture-le-mans/">Le Mans</a></li><li><a href="/prix-toiture-brest/">Brest</a></li><li><a href="/prix-toiture-tours/">Tours</a></li><li><a href="/prix-toiture-amiens/">Amiens</a></li><li><a href="/prix-toiture-limoges/">Limoges</a></li><li><a href="/prix-toiture-annecy/">Annecy</a></li><li><a href="/prix-toiture-perpignan/">Perpignan</a></li><li><a href="/prix-toiture-metz/">Metz</a></li></ul>
+<h4>Prix couvreur par département</h4><ul><li><a href="/prix-couvreur-ain-01/">Ain (01)</a></li><li><a href="/prix-couvreur-aisne-02/">Aisne (02)</a></li><li><a href="/prix-couvreur-allier-03/">Allier (03)</a></li><li><a href="/prix-couvreur-alpes-de-haute-provence-04/">Alpes-de-Haute-Provence (04)</a></li><li><a href="/prix-couvreur-hautes-alpes-05/">Hautes-Alpes (05)</a></li><li><a href="/prix-couvreur-alpes-maritimes-06/">Alpes-Maritimes (06)</a></li><li><a href="/prix-couvreur-ardeche-07/">Ardèche (07)</a></li><li><a href="/prix-couvreur-ardennes-08/">Ardennes (08)</a></li><li><a href="/prix-couvreur-ariege-09/">Ariège (09)</a></li><li><a href="/prix-couvreur-aube-10/">Aube (10)</a></li><li><a href="/prix-couvreur-aude-11/">Aude (11)</a></li><li><a href="/prix-couvreur-aveyron-12/">Aveyron (12)</a></li><li><a href="/prix-couvreur-bouches-du-rhone-13/">Bouches-du-Rhône (13)</a></li><li><a href="/prix-couvreur-calvados-14/">Calvados (14)</a></li><li><a href="/prix-couvreur-cantal-15/">Cantal (15)</a></li><li><a href="/prix-couvreur-charente-16/">Charente (16)</a></li><li><a href="/prix-couvreur-charente-maritime-17/">Charente-Maritime (17)</a></li><li><a href="/prix-couvreur-cher-18/">Cher (18)</a></li><li><a href="/prix-couvreur-correze-19/">Corrèze (19)</a></li><li><a href="/prix-couvreur-corse-du-sud-2a/">Corse-du-Sud (2A)</a></li><li><a href="/prix-couvreur-haute-corse-2b/">Haute-Corse (2B)</a></li><li><a href="/prix-couvreur-cote-d-or-21/">Côte-d'Or (21)</a></li><li><a href="/prix-couvreur-cotes-d-armor-22/">Côtes-d'Armor (22)</a></li><li><a href="/prix-couvreur-creuse-23/">Creuse (23)</a></li><li><a href="/prix-couvreur-dordogne-24/">Dordogne (24)</a></li><li><a href="/prix-couvreur-doubs-25/">Doubs (25)</a></li><li><a href="/prix-couvreur-drome-26/">Drôme (26)</a></li><li><a href="/prix-couvreur-eure-27/">Eure (27)</a></li><li><a href="/prix-couvreur-eure-et-loir-28/">Eure-et-Loir (28)</a></li><li><a href="/prix-couvreur-finistere-29/">Finistère (29)</a></li><li><a href="/prix-couvreur-gard-30/">Gard (30)</a></li><li><a href="/prix-couvreur-haute-garonne-31/">Haute-Garonne (31)</a></li><li><a href="/prix-couvreur-gers-32/">Gers (32)</a></li><li><a href="/prix-couvreur-gironde-33/">Gironde (33)</a></li><li><a href="/prix-couvreur-herault-34/">Hérault (34)</a></li><li><a href="/prix-couvreur-ille-et-vilaine-35/">Ille-et-Vilaine (35)</a></li><li><a href="/prix-couvreur-indre-36/">Indre (36)</a></li><li><a href="/prix-couvreur-indre-et-loire-37/">Indre-et-Loire (37)</a></li><li><a href="/prix-couvreur-isere-38/">Isère (38)</a></li><li><a href="/prix-couvreur-jura-39/">Jura (39)</a></li><li><a href="/prix-couvreur-landes-40/">Landes (40)</a></li><li><a href="/prix-couvreur-loir-et-cher-41/">Loir-et-Cher (41)</a></li><li><a href="/prix-couvreur-loire-42/">Loire (42)</a></li><li><a href="/prix-couvreur-haute-loire-43/">Haute-Loire (43)</a></li><li><a href="/prix-couvreur-loire-atlantique-44/">Loire-Atlantique (44)</a></li><li><a href="/prix-couvreur-loiret-45/">Loiret (45)</a></li><li><a href="/prix-couvreur-lot-46/">Lot (46)</a></li><li><a href="/prix-couvreur-lot-et-garonne-47/">Lot-et-Garonne (47)</a></li><li><a href="/prix-couvreur-lozere-48/">Lozère (48)</a></li><li><a href="/prix-couvreur-maine-et-loire-49/">Maine-et-Loire (49)</a></li><li><a href="/prix-couvreur-manche-50/">Manche (50)</a></li><li><a href="/prix-couvreur-marne-51/">Marne (51)</a></li><li><a href="/prix-couvreur-haute-marne-52/">Haute-Marne (52)</a></li><li><a href="/prix-couvreur-mayenne-53/">Mayenne (53)</a></li><li><a href="/prix-couvreur-meurthe-et-moselle-54/">Meurthe-et-Moselle (54)</a></li><li><a href="/prix-couvreur-meuse-55/">Meuse (55)</a></li><li><a href="/prix-couvreur-morbihan-56/">Morbihan (56)</a></li><li><a href="/prix-couvreur-moselle-57/">Moselle (57)</a></li><li><a href="/prix-couvreur-nievre-58/">Nièvre (58)</a></li><li><a href="/prix-couvreur-nord-59/">Nord (59)</a></li><li><a href="/prix-couvreur-oise-60/">Oise (60)</a></li><li><a href="/prix-couvreur-orne-61/">Orne (61)</a></li><li><a href="/prix-couvreur-pas-de-calais-62/">Pas-de-Calais (62)</a></li><li><a href="/prix-couvreur-puy-de-dome-63/">Puy-de-Dôme (63)</a></li><li><a href="/prix-couvreur-pyrenees-atlantiques-64/">Pyrénées-Atlantiques (64)</a></li><li><a href="/prix-couvreur-hautes-pyrenees-65/">Hautes-Pyrénées (65)</a></li><li><a href="/prix-couvreur-pyrenees-orientales-66/">Pyrénées-Orientales (66)</a></li><li><a href="/prix-couvreur-bas-rhin-67/">Bas-Rhin (67)</a></li><li><a href="/prix-couvreur-haut-rhin-68/">Haut-Rhin (68)</a></li><li><a href="/prix-couvreur-rhone-69/">Rhône (69)</a></li><li><a href="/prix-couvreur-haute-saone-70/">Haute-Saône (70)</a></li><li><a href="/prix-couvreur-saone-et-loire-71/">Saône-et-Loire (71)</a></li><li><a href="/prix-couvreur-sarthe-72/">Sarthe (72)</a></li><li><a href="/prix-couvreur-savoie-73/">Savoie (73)</a></li><li><a href="/prix-couvreur-haute-savoie-74/">Haute-Savoie (74)</a></li><li><a href="/prix-couvreur-paris-75/">Paris (75)</a></li><li><a href="/prix-couvreur-seine-maritime-76/">Seine-Maritime (76)</a></li><li><a href="/prix-couvreur-seine-et-marne-77/">Seine-et-Marne (77)</a></li><li><a href="/prix-couvreur-yvelines-78/">Yvelines (78)</a></li><li><a href="/prix-couvreur-deux-sevres-79/">Deux-Sèvres (79)</a></li><li><a href="/prix-couvreur-somme-80/">Somme (80)</a></li><li><a href="/prix-couvreur-tarn-81/">Tarn (81)</a></li><li><a href="/prix-couvreur-tarn-et-garonne-82/">Tarn-et-Garonne (82)</a></li><li><a href="/prix-couvreur-var-83/">Var (83)</a></li><li><a href="/prix-couvreur-vaucluse-84/">Vaucluse (84)</a></li><li><a href="/prix-couvreur-vendee-85/">Vendée (85)</a></li><li><a href="/prix-couvreur-vienne-86/">Vienne (86)</a></li><li><a href="/prix-couvreur-haute-vienne-87/">Haute-Vienne (87)</a></li><li><a href="/prix-couvreur-vosges-88/">Vosges (88)</a></li><li><a href="/prix-couvreur-yonne-89/">Yonne (89)</a></li><li><a href="/prix-couvreur-territoire-de-belfort-90/">Territoire de Belfort (90)</a></li><li><a href="/prix-couvreur-essonne-91/">Essonne (91)</a></li><li><a href="/prix-couvreur-hauts-de-seine-92/">Hauts-de-Seine (92)</a></li><li><a href="/prix-couvreur-seine-saint-denis-93/">Seine-Saint-Denis (93)</a></li><li><a href="/prix-couvreur-val-de-marne-94/">Val-de-Marne (94)</a></li><li><a href="/prix-couvreur-val-d-oise-95/">Val-d'Oise (95)</a></li><li><a href="/prix-couvreur-guadeloupe-971/">Guadeloupe (971)</a></li><li><a href="/prix-couvreur-martinique-972/">Martinique (972)</a></li><li><a href="/prix-couvreur-guyane-973/">Guyane (973)</a></li><li><a href="/prix-couvreur-la-reunion-974/">La Réunion (974)</a></li><li><a href="/prix-couvreur-mayotte-976/">Mayotte (976)</a></li></ul>
+<h4>Monaco, Belgique, Suisse</h4><ul><li><a href="/prix-toiture-monaco/">Monaco</a></li><li><a href="/prix-toiture-belgique/">Belgique</a></li><li><a href="/prix-toiture-suisse/">Suisse</a></li></ul>
+</div></div><div class="scrim" id="scrim" onclick="toggleMenu(false)"></div><script>
+function toggleMenu(o){document.getElementById('drawer').classList.toggle('open',o);document.getElementById('scrim').classList.toggle('open',o);}
+function filterMenu(v){v=v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');document.querySelectorAll('#drawer li').forEach(li=>{li.style.display=li.textContent.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(v)?'':'none';});}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')toggleMenu(false)});
+</script></body>
+</html>
